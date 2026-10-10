@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500">
+<rect width="1100" height="500" fill="white"/>
+<g font-family="Arial, sans-serif" fill="#0f172a">
+<text x="50" y="50" font-size="24">Modelo de datos · PostgreSQL</text>
+<rect x="50" y="100" width="390" height="250" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+<text x="68" y="130" font-size="20" font-weight="bold">funds</text>
+<path d="M50 145h390" stroke="#64748b"/>
+<text x="65" y="178" font-size="12" fill="#475569">PK</text>
+<text x="125" y="178" font-size="15">id</text>
+<text x="255" y="178" font-size="14" fill="#475569">bigint · identity</text>
+<text x="65" y="212" font-size="12" fill="#475569">UQ</text>
+<text x="125" y="212" font-size="15">isin</text>
+<text x="255" y="212" font-size="14" fill="#475569">varchar(12)</text>
+<text x="65" y="246" font-size="12" fill="#475569"></text>
+<text x="125" y="246" font-size="15">name</text>
+<text x="255" y="246" font-size="14" fill="#475569">text</text>
+<text x="65" y="280" font-size="12" fill="#475569"></text>
+<text x="125" y="280" font-size="15">currency</text>
+<text x="255" y="280" font-size="14" fill="#475569">varchar(3)</text>
+<text x="65" y="314" font-size="12" fill="#475569"></text>
+<text x="125" y="314" font-size="15">active</text>
+<text x="255" y="314" font-size="14" fill="#475569">boolean</text>
+<rect x="650" y="100" width="390" height="250" rx="8" fill="#f1f5f9" stroke="#64748b"/>
+<text x="668" y="130" font-size="20" font-weight="bold">fund_navs</text>
+<path d="M650 145h390" stroke="#64748b"/>
+<text x="665" y="178" font-size="12" fill="#475569">PK, FK</text>
+<text x="725" y="178" font-size="15">fund_id</text>
+<text x="855" y="178" font-size="14" fill="#475569">bigint</text>
+<text x="665" y="212" font-size="12" fill="#475569">PK</text>
+<text x="725" y="212" font-size="15">nav_date</text>
+<text x="855" y="212" font-size="14" fill="#475569">date</text>
+<text x="665" y="246" font-size="12" fill="#475569"></text>
+<text x="725" y="246" font-size="15">nav_value</text>
+<text x="855" y="246" font-size="14" fill="#475569">numeric(80,48)</text>
+<text x="665" y="280" font-size="12" fill="#475569"></text>
+<text x="725" y="280" font-size="15">fetched_at</text>
+<text x="855" y="280" font-size="14" fill="#475569">timestamptz</text>
+<path d="M440 225H650 M452 214V236 M462 214V236 M635 225L650 213 M635 225L650 237" fill="none" stroke="#64748b" stroke-width="2"/>
+<circle cx="622" cy="225" r="6" fill="white" stroke="#64748b" stroke-width="2"/>
+<text x="535" y="207" text-anchor="middle" font-size="16">1 → 0..N</text>
+<text x="50" y="400" font-size="15">Esquema configurable: [SCHEMA_PLACEHOLDER]</text>
+<text x="50" y="428" font-size="15">Todos los campos son NOT NULL. PK = clave primaria · FK = clave foránea · UQ = único.</text>
+<text x="50" y="456" font-size="15">PK compuesta de fund_navs: (fund_id, nav_date). Cada NAV pertenece a un fondo.</text>
+</g></svg>

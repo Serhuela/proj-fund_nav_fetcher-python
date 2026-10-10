@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram id="modelo-datos" name="Modelo de datos">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1100" pageHeight="600">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="funds" value="&lt;b&gt;funds&lt;/b&gt;&lt;hr&gt;PK id : bigint · identity&lt;br&gt;UQ isin : varchar(12)&lt;br&gt;name : text&lt;br&gt;currency : varchar(3)&lt;br&gt;active : boolean&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#64748b;fontSize=14;align=left;verticalAlign=top;spacing=16;fillColor=#f1f5f9;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="100" width="390" height="250" />
+        </mxCell>
+        <mxCell id="fund_navs" value="&lt;b&gt;fund_navs&lt;/b&gt;&lt;hr&gt;PK, FK fund_id : bigint&lt;br&gt;PK nav_date : date&lt;br&gt;nav_value : numeric(80,48)&lt;br&gt;fetched_at : timestamptz&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#64748b;fontSize=14;align=left;verticalAlign=top;spacing=16;fillColor=#f1f5f9;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="650" y="100" width="390" height="250" />
+        </mxCell>
+        <mxCell id="title" value="Modelo de datos · PostgreSQL" style="text;html=1;fontSize=24;align=left;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="25" width="990" height="40" />
+        </mxCell>
+        <mxCell id="note" value="Esquema configurable: [SCHEMA_PLACEHOLDER]&lt;br&gt;Todos los campos son NOT NULL. PK = clave primaria · FK = clave foránea · UQ = único.&lt;br&gt;PK compuesta de fund_navs: (fund_id, nav_date). Cada NAV pertenece a un fondo; un fondo puede tener 0..N NAV." style="text;html=1;fontSize=14;align=left;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="400" width="990" height="100" />
+        </mxCell>
+        <mxCell id="relation" value="1 → 0..N" edge="1" parent="1" source="funds" target="fund_navs" style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;fontSize=16;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
