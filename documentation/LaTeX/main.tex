@@ -1,0 +1,40 @@
+\documentclass[11pt,a4paper,oneside,openany]{book}
+
+% Guardar todos los archivos .tex con codificación UTF-8.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+
+% Tablas compactas, con anchura natural y separación entre entornos.
+\newenvironment{projecttable}[1][@{}p{2.5cm}l@{\hspace{0.8cm}}l@{}]{%
+  \par\begingroup
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}%
+  \begin{tabular}{#1}%
+}{%
+  \end{tabular}\par\endgroup
+}
+
+\title{Obtención y almacenamiento de valores liquidativos\\de fondos de inversión}
+\author{}
+\date{}
+
+\begin{document}
+\frontmatter
+\hypersetup{pageanchor=false}
+%\maketitle
+\hypersetup{pageanchor=true}
+%\tableofcontents
+
+\mainmatter
+\include{chapters/introduccion}
+\include{chapters/arquitectura}
+\include{chapters/base_de_datos}
+\end{document}

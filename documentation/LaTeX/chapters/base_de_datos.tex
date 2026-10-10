@@ -1,0 +1,26 @@
+\chapter{Base de datos}
+
+Se utiliza PostgreSQL gestionado en el repositorio
+\href{https://github.com/Serhuela/infra-postgresql-terraform}{infra-postgresql-terraform}.
+
+\section{Bases de datos y esquemas}
+
+\begin{projecttable}
+\toprule
+\textbf{Elemento} & \textbf{Desarrollo} & \textbf{Producción} \\
+\midrule
+Base de datos & \path{psql_ddbb_dev_fund_nav} & \path{psql_ddbb_pro_fund_nav} \\
+Esquema & \texttt{nav} & \texttt{nav} \\
+\bottomrule
+\end{projecttable}
+
+\section{Usuarios}
+
+\begin{projecttable}
+\toprule
+\textbf{Uso previsto} & \textbf{Desarrollo} & \textbf{Producción} \\
+\midrule
+DDL & \path{psql_user_dev_fund_nav_deploy} & \path{psql_user_pro_fund_nav_deploy} \\
+DML & \path{psql_user_dev_fund_nav_bot} & \path{psql_user_pro_fund_nav_bot} \\
+\bottomrule
+\end{projecttable}

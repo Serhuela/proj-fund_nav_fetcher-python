@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 190" role="img" aria-labelledby="title description">
+  <title id="title">Arquitectura del proyecto</title>
+  <desc id="description">El servicio Python desplegado en Docker inicia las conexiones con las fuentes de Internet y con PostgreSQL.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#666"/>
+    </marker>
+  </defs>
+  <g stroke-width="2">
+    <rect x="20" y="35" width="220" height="120" rx="12" fill="#fff2cc" stroke="#d6b656"/>
+    <rect x="310" y="35" width="220" height="120" rx="12" fill="#dae8fc" stroke="#6c8ebf"/>
+    <path d="M 610 55 C 610 28 810 28 810 55 L 810 135 C 810 162 610 162 610 135 Z" fill="#d5e8d4" stroke="#82b366"/>
+    <path d="M 610 55 C 610 82 810 82 810 55" fill="none" stroke="#82b366"/>
+    <path d="M 310 95 H 242" fill="none" stroke="#666" marker-end="url(#arrow)"/>
+    <path d="M 530 95 H 608" fill="none" stroke="#666" marker-end="url(#arrow)"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="18" fill="#202020" text-anchor="middle">
+    <text x="130" y="85" font-weight="bold">Fuentes de Internet</text>
+    <text x="130" y="113" font-size="16">Por determinar</text>
+    <text x="420" y="85" font-weight="bold">Contenedor Docker</text>
+    <text x="420" y="113" font-size="16">Servicio Python</text>
+    <text x="710" y="100" font-weight="bold">PostgreSQL</text>
+    <text x="710" y="128" font-size="16">Base de datos relacional</text>
+  </g>
+</svg>

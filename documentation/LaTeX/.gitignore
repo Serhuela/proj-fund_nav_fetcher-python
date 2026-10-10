@@ -1,0 +1,61 @@
+# Archivos auxiliares de LaTeX (también en subcarpetas).
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.loa
+*.lol
+*.fls
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.synctex.gz(busy)
+*.dvi
+*.xdv
+
+# Bibliografía generada; conservar los originales .bib.
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Índices, glosarios y listas de acrónimos.
+*.idx
+*.ind
+*.ilg
+*.glo
+*.gls
+*.glg
+*.glsdefs
+*.ist
+*.acn
+*.acr
+*.alg
+*.nlo
+*.nls
+*.nlg
+
+# Presentaciones y paquetes auxiliares.
+*.nav
+*.snm
+*.vrb
+*.thm
+*.sta
+*.spl
+*.w18
+*.pyg
+_minted*/
+
+# Archivos temporales y de respaldo de editores.
+*.bak
+*.tmp
+*.swp
+*.swo
+*~
+
+# Mantener las fuentes y los PDF en el repositorio.
+!*.tex
+!*.pdf

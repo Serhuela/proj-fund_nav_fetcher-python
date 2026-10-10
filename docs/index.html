@@ -3,10 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>proj-fund_nav_fetcher-python</title>
+  <title>Histórico de valores liquidativos</title>
 </head>
 <body>
-  <h1>proj-fund_nav_fetcher-python</h1>
-  <p>Obtención y almacenamiento de valores liquidativos (NAV) de fondos de inversión.</p>
+  <main>
+    <h1>Histórico de valores liquidativos</h1>
+
+    <h2>Qué hace</h2>
+    <p>El proyecto tiene como objetivo capturar y almacenar los valores liquidativos (NAV) de fondos de inversión para su consulta posterior.</p>
+
+    <h2>Cómo funciona</h2>
+    <p>La solución se basará en un servicio Python desplegado en un contenedor Docker, que obtendrá los datos de fuentes de Internet y los guardará en una base de datos PostgreSQL.</p>
+    <figure style="margin: 1.5rem 0; max-width: 840px;">
+      <img src="assets/arquitectura.svg" width="840" height="190" style="display: block; max-width: 100%; height: auto;" alt="El servicio Python en Docker se conecta a las fuentes de Internet y a PostgreSQL.">
+    </figure>
+  </main>
 </body>
 </html>
