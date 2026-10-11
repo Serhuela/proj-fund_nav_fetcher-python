@@ -222,3 +222,6 @@ __marimo__/
 # Archivos locales generados por Gentle AI
 /.atl/.skill-registry.cache.json
 /.atl/skill-registry.md
+
+# Copias de seguridad automáticas de Draw.io
+*.drawio.bkp

@@ -1,0 +1,13 @@
+# Ejecuta la última imagen publicada en Docker Hub; no construye en Bigoci.
+name: fund-nav-fetcher
+
+services:
+  fund-nav-fetcher:
+    image: serhuela/fund-nav-fetcher:latest
+    restart: unless-stopped
+    init: true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "20"

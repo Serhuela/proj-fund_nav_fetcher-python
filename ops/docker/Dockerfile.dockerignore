@@ -1,0 +1,15 @@
+# Limita el contexto a los archivos necesarios para construir la aplicación.
+**
+!pyproject.toml
+!README.md
+!code/
+!code/**
+!ops/
+!ops/docker/
+!ops/docker/Dockerfile
+
+# Excluye también los archivos locales que puedan aparecer dentro de code/.
+**/__pycache__/
+**/*.py[cod]
+**/.env
+**/.env.*
