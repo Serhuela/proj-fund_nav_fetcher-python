@@ -1,0 +1,165 @@
+\chapter{Modelo de datos}
+
+\newcommand{\modeltablebefore}{%
+  \par\addvspace{0.7\baselineskip}%
+  \begingroup\projecttablestyle%
+  \noindent
+}
+\newcommand{\modeltableafter}{\par\endgroup\addvspace{0.9\baselineskip}}
+
+El modelo registra los fondos que se desean seguir, las fuentes consultables y
+los valores liquidativos recogidos. La unidad del proyecto es el fondo
+identificado por su ISIN: cada ISIN corresponde a un registro en \path{funds}.
+
+\section{Vista de conjunto}
+
+El modelo está compuesto por cuatro tablas:
+
+\modeltablebefore
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}X@{}}
+\toprule
+\rowcolor{TableHeader}
+\textbf{Tabla} & \textbf{Responsabilidad} \\
+\midrule
+\path{funds} & Catálogo de fondos seguidos, identificados por ISIN. \\ \hline
+\path{data_sources} & Proveedores de datos y código del adaptador que los consulta. \\ \hline
+\path{fund_sources} & Asociación de un fondo con un proveedor y los datos necesarios para consultarlo. \\ \hline
+\path{fund_navs} & Histórico de valores liquidativos, fechas de valoración y procedencia. \\
+\bottomrule
+\end{tabularx}
+\modeltableafter
+
+Un fondo y un proveedor pueden existir independientemente. La tabla
+\path{fund_sources} los relaciona y permite configurar más de una fuente para
+un mismo fondo. Cada valor almacenado en \path{fund_navs} referencia esa
+asociación, de modo que queda registrada la procedencia del dato.
+
+La clave primaria de \path{fund_navs} es \path{(fund_id, nav_date)}; por tanto,
+el diseño conserva un único valor liquidativo por fondo y fecha. La clave
+foránea compuesta \path{(fund_id, fund_source_id)} apunta a
+\path{fund_sources(fund_id, id)}. Además de comprobar que la asociación exista,
+impide atribuir un valor a una fuente configurada para otro fondo.
+
+El diagrama entidad-relación está disponible en
+\href{run:../../data_model/modelo_datos.drawio}{\path{data_model/modelo_datos.drawio}}.
+
+\clearpage
+\begin{landscape}
+\thispagestyle{plain}
+\section{Tabla \texttt{funds}}
+
+Contiene los fondos que la aplicación debe seguir. El ISIN es obligatorio y
+único, y constituye el identificador externo del fondo; la clave primaria
+interna \path{id} se utiliza en las relaciones entre tablas. Un fondo puede
+registrarse antes de configurar sus fuentes.
+
+Los identificadores internos de los ejemplos son ilustrativos.
+
+\modeltablebefore
+\begin{tabularx}{\dimexpr\paperheight-5cm\relax}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\rowcolor{TableHeader}
+\textbf{Campo} & \textbf{Tipo} & \textbf{Ejemplo} & \textbf{Clave} & \textbf{Descripción} \\
+\midrule
+\path{id} & bigint & 42 & PK & Identificador interno generado por PostgreSQL. \\ \hline
+\path{isin} & varchar(12) & \path{ES0152769032} & UQ, NOT NULL & ISIN único que identifica el fondo. \\ \hline
+\path{name} & text & Fondo Naranja S\&P 500 FI & NOT NULL & Nombre del fondo. \\ \hline
+\path{currency} & varchar(3) & \path{EUR} & NOT NULL & Divisa en la que se expresa el NAV. \\ \hline
+\path{active} & boolean & \path{true} & NOT NULL & Indica si se recogen nuevos valores. \\
+\bottomrule
+\end{tabularx}
+\modeltableafter
+\end{landscape}
+
+\clearpage
+\begin{landscape}
+\thispagestyle{plain}
+\section{Tabla \texttt{data\_sources}}
+
+Define cada proveedor de valores liquidativos de forma independiente de los
+fondos que comercializa. El campo \path{code} identifica el adaptador Python
+que implementa la consulta.
+
+\modeltablebefore
+\begin{tabularx}{\dimexpr\paperheight-5cm\relax}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\rowcolor{TableHeader}
+\textbf{Campo} & \textbf{Tipo} & \textbf{Ejemplo} & \textbf{Clave} & \textbf{Descripción} \\
+\midrule
+\path{id} & bigint & 3 & PK & Identificador interno generado por PostgreSQL. \\ \hline
+\path{code} & text & \path{amundi} & UQ, NOT NULL & Código estable del adaptador Python. \\ \hline
+\path{name} & text & Amundi & NOT NULL & Nombre legible del proveedor. \\ \hline
+\path{base_url} & text & \url{https://amundi.es} & NOT NULL & Dirección base pública, sin credenciales. \\ \hline
+\path{active} & boolean & \path{true} & NOT NULL & Permite detener consultas conservando el histórico. \\
+\bottomrule
+\end{tabularx}
+\modeltableafter
+\end{landscape}
+
+\clearpage
+\begin{landscape}
+\thispagestyle{plain}
+\section{Tabla \texttt{fund\_sources}}
+
+Relaciona un fondo con un proveedor y almacena la configuración específica
+necesaria para consultar sus valores. Cada pareja fondo-proveedor es única.
+Los campos \path{external_id} y \path{nav_url} son opcionales: se usan cuando
+el proveedor requiere un identificador distinto del ISIN o una dirección
+específica.
+
+\modeltablebefore
+\begin{tabularx}{\dimexpr\paperheight-5cm\relax}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\rowcolor{TableHeader}
+\textbf{Campo} & \textbf{Tipo} & \textbf{Ejemplo} & \textbf{Clave} & \textbf{Descripción} \\
+\midrule
+\path{id} & bigint & 12 & PK & Identificador de esta asociación. \\ \hline
+\path{fund_id} & bigint & 42 & FK, NOT NULL & Referencia \path{funds(id)}. \\ \hline
+\path{source_id} & bigint & 3 & FK, NOT NULL & Referencia \path{data_sources(id)}. \\ \hline
+\path{external_id} & text & \path{FND-12345} & Opcional & Identificador del fondo en el proveedor, si hace falta. \\ \hline
+\path{nav_url} & text & \url{https://datos.example/f/12345} & Opcional & URL específica de consulta para los valores del fondo. \\ \hline
+\path{priority} & integer & 1 & NOT NULL & Un número menor tiene preferencia. \\ \hline
+\path{active} & boolean & \path{true} & NOT NULL & Habilita o deshabilita esta ruta. \\
+\bottomrule
+\end{tabularx}
+\modeltableafter
+\par\medskip
+
+La restricción \path{UNIQUE (fund_id, source_id)} evita duplicar la asociación
+para el mismo proveedor. La restricción \path{UNIQUE (fund_id, id)} permite que
+\path{fund_navs} compruebe mediante una FK compuesta que la fuente pertenece
+al fondo indicado.
+\end{landscape}
+
+\clearpage
+\begin{landscape}
+\thispagestyle{plain}
+\section{Tabla \texttt{fund\_navs}}
+
+Almacena el valor liquidativo seleccionado para cada fondo y fecha, junto con
+el momento de recogida y la asociación de proveedor que lo originó. La fecha
+es la fecha de valoración publicada por la fuente, no necesariamente el día en
+que se descargó el dato.
+
+\modeltablebefore
+\begin{tabularx}{\dimexpr\paperheight-5cm\relax}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\rowcolor{TableHeader}
+\textbf{Campo} & \textbf{Tipo} & \textbf{Ejemplo} & \textbf{Clave} & \textbf{Descripción} \\
+\midrule
+\path{fund_id} & bigint & 42 & PK parcial, FK compuesta & Identifica el fondo. \\ \hline
+\path{nav_date} & date & \path{2026-10-08} & PK parcial & Fecha de valoración. \\ \hline
+\path{nav_value} & numeric(80,48) & \path{45.6705203} & NOT NULL & Valor liquidativo positivo, en la divisa del fondo. \\ \hline
+\path{fund_source_id} & bigint & 12 & FK compuesta, NOT NULL & Asociación del fondo y proveedor que originó el dato. \\ \hline
+\path{fetched_at} & timestamptz & \texttt{2026-10-08 18:30+00} & NOT NULL & Instante de recogida, por defecto la hora actual. \\
+\bottomrule
+\end{tabularx}
+\modeltableafter
+\par\medskip
+
+La FK compuesta \path{(fund_id, fund_source_id)} referencia
+\path{fund_sources(fund_id, id)}. Así, la base de datos rechaza tanto una
+asociación inexistente como una asociación que pertenezca a otro fondo. El
+modelo conserva un único valor por fondo y fecha; no guarda observaciones
+simultáneas de varios proveedores ni versiones anteriores de correcciones.
+\end{landscape}

@@ -3,38 +3,108 @@
 % Guardar todos los archivos .tex con codificación UTF-8.
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-lcroman]{babel}
 \usepackage{lmodern}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=2.5cm,headheight=15pt]{geometry}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
 \usepackage{tabularx}
 \usepackage{booktabs}
-\usepackage[hidelinks]{hyperref}
-\setlength{\emergencystretch}{3em}
+\usepackage{pdflscape}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
 
-% Tablas compactas, con anchura natural y separación entre entornos.
-\newenvironment{projecttable}[1][@{}p{2.5cm}l@{\hspace{0.8cm}}l@{}]{%
-  \par\begingroup
-  \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}%
-  \begin{tabular}{#1}%
-}{%
-  \end{tabular}\par\endgroup
+% Paleta discreta y legible tanto en pantalla como en impresión.
+\definecolor{ProjectBlue}{HTML}{24485B}
+\definecolor{ProjectMuted}{HTML}{536573}
+\definecolor{TableHeader}{HTML}{DFE9EF}
+\definecolor{TableShade}{HTML}{F1F5F7}
+\definecolor{TableLine}{HTML}{C6D1D8}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ProjectBlue,
+  urlcolor=ProjectBlue,
+  filecolor=ProjectBlue,
+  pdftitle={Obtención y almacenamiento de valores liquidativos de fondos de inversión},
+  pdfsubject={Memoria técnica del proyecto fund-nav-fetcher},
+  pdfdisplaydoctitle=true
+}
+\setlength{\emergencystretch}{3em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55\baselineskip}
+\setlist[itemize]{topsep=0.3\baselineskip,itemsep=0.2\baselineskip}
+
+% Los capítulos conservan su numeración con menos espacio vacío al inicio.
+\titleformat{\chapter}[display]
+  {\sffamily\bfseries\color{ProjectBlue}}
+  {\small\MakeUppercase{\chaptername}\ \thechapter}{0.5em}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{1.2\baselineskip}
+\titleformat{\section}{\Large\sffamily\bfseries\color{ProjectBlue}}
+  {\thesection}{0.65em}{}
+\titlespacing*{\section}{0pt}{1.1\baselineskip}{0.45\baselineskip}
+
+% Cabeceras sobrias y número de página en una posición constante.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{ProjectMuted}\nouppercase{\leftmark}}
+\fancyfoot[R]{\small\sffamily\color{ProjectMuted}\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[R]{\small\sffamily\color{ProjectMuted}\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
 }
 
-\title{Obtención y almacenamiento de valores liquidativos\\de fondos de inversión}
-\author{}
-\date{}
+% Estilo común: filas alternas, separadores finos y espacio para celdas multilínea.
+% Cada tabla debe aplicar TableHeader a su fila de encabezado.
+\newcommand{\projecttablestyle}{%
+  \small
+  \renewcommand{\arraystretch}{1.45}%
+  \setlength{\extrarowheight}{3pt}%
+  \setlength{\tabcolsep}{7pt}%
+  \arrayrulecolor{TableLine}%
+  \rowcolors{2}{TableShade}{white}%
+}
+\newenvironment{projecttable}{%
+  \par\addvspace{0.5\baselineskip}\begingroup
+  \projecttablestyle
+  \noindent\tabularx{\textwidth}{%
+    >{\raggedright\arraybackslash}p{2.5cm}%
+    >{\raggedright\arraybackslash}X%
+    >{\raggedright\arraybackslash}X}%
+}{%
+  \endtabularx\par\endgroup\addvspace{0.6\baselineskip}%
+}
 
 \begin{document}
 \frontmatter
 \hypersetup{pageanchor=false}
-%\maketitle
+\begin{titlepage}
+  \sffamily
+  {\small\color{ProjectMuted} FUND NAV FETCHER\par}
+  \vspace{2.8cm}
+  {\Huge\bfseries\color{ProjectBlue}
+    Obtención y almacenamiento\\[0.25em]
+    de valores liquidativos\par}
+  \vspace{0.8cm}
+  {\Large Fondos de inversión\par}
+  \vspace{1.2cm}
+  {\color{ProjectBlue}\rule{\textwidth}{1.2pt}\par}
+  \vspace{0.6cm}
+  {\large Memoria técnica\par}
+  {\color{ProjectMuted} Objetivo, arquitectura y modelo de datos\par}
+  \vfill
+  {\small\color{ProjectMuted} Documento en evolución\par}
+\end{titlepage}
 \hypersetup{pageanchor=true}
-%\tableofcontents
+\tableofcontents
 
 \mainmatter
 \include{chapters/introduccion}
 \include{chapters/arquitectura}
 \include{chapters/base_de_datos}
+\include{chapters/modelo_datos}
 \end{document}
