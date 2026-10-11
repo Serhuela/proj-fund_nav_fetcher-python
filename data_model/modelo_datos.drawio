@@ -1,24 +1,395 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="app.diagrams.net">
-  <diagram id="modelo-datos" name="Modelo de datos">
-    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1100" pageHeight="600">
+  <diagram id="modelo-datos" name="Modelo entidad-relación">
+    <mxGraphModel dx="1400" dy="1170" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1400" pageHeight="1170" background="#f8fafc">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="funds" value="&lt;b&gt;funds&lt;/b&gt;&lt;hr&gt;PK id : bigint · identity&lt;br&gt;UQ isin : varchar(12)&lt;br&gt;name : text&lt;br&gt;currency : varchar(3)&lt;br&gt;active : boolean&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#64748b;fontSize=14;align=left;verticalAlign=top;spacing=16;fillColor=#f1f5f9;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="50" y="100" width="390" height="250" />
+        <mxCell id="eyebrow" value="FUND NAV FETCHER  /  POSTGRESQL" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="36" width="1200" height="24" />
         </mxCell>
-        <mxCell id="fund_navs" value="&lt;b&gt;fund_navs&lt;/b&gt;&lt;hr&gt;PK, FK fund_id : bigint&lt;br&gt;PK nav_date : date&lt;br&gt;nav_value : numeric(80,48)&lt;br&gt;fetched_at : timestamptz&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#64748b;fontSize=14;align=left;verticalAlign=top;spacing=16;fillColor=#f1f5f9;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="650" y="100" width="390" height="250" />
+        <mxCell id="title" value="Modelo de datos · fondos, fuentes y valores" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=30;fontColor=#0f172a;fontStyle=1;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="70" width="1250" height="44" />
         </mxCell>
-        <mxCell id="title" value="Modelo de datos · PostgreSQL" style="text;html=1;fontSize=24;align=left;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="50" y="25" width="990" height="40" />
+        <mxCell id="subtitle" value="Orden de creación 01 → 02 → 03 → 04   ·   Esquema configurable: [SCHEMA_PLACEHOLDER]" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#334155;fontStyle=0;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="120" width="1250" height="26" />
         </mxCell>
-        <mxCell id="note" value="Esquema configurable: [SCHEMA_PLACEHOLDER]&lt;br&gt;Todos los campos son NOT NULL. PK = clave primaria · FK = clave foránea · UQ = único.&lt;br&gt;PK compuesta de fund_navs: (fund_id, nav_date). Cada NAV pertenece a un fondo; un fondo puede tener 0..N NAV." style="text;html=1;fontSize=14;align=left;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="50" y="400" width="990" height="100" />
+        <mxCell id="funds" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#cbd5e1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="190" width="570" height="362" />
         </mxCell>
-        <mxCell id="relation" value="1 → 0..N" edge="1" parent="1" source="funds" target="fund_navs" style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;fontSize=16;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+        <mxCell id="funds_bar" value="" style="fillColor=#1d4ed8;strokeColor=none;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="0.0" y="14.0" width="5" height="54" />
+        </mxCell>
+        <mxCell id="funds_name" value="01  funds" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=23;fontColor=#1d4ed8;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="15.0" width="520" height="32" />
+        </mxCell>
+        <mxCell id="funds_sub" value="Fondos seguidos" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#334155;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="52.0" width="525" height="25" />
+        </mxCell>
+        <mxCell id="funds_head_key" value="CLAVE" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="93.0" width="80" height="20" />
+        </mxCell>
+        <mxCell id="funds_head_field" value="CAMPO" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="116.0" y="93.0" width="220" height="20" />
+        </mxCell>
+        <mxCell id="funds_head_type" value="TIPO / VALOR INICIAL" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="335.0" y="93.0" width="215" height="20" />
+        </mxCell>
+        <mxCell id="funds_shade_0" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="1.0" y="126.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="funds_key_0" value="PK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#1d4ed8;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="126.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="funds_field_0" value="id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="116.0" y="126.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="funds_type_0" value="bigint · identity" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="335.0" y="126.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="funds_key_1" value="UQ" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#1d4ed8;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="160.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="funds_field_1" value="isin" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="116.0" y="160.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="funds_type_1" value="varchar(12)" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="335.0" y="160.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="funds_shade_2" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="1.0" y="194.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="funds_key_2" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#1d4ed8;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="194.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="funds_field_2" value="name" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="116.0" y="194.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="funds_type_2" value="text" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="335.0" y="194.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="funds_key_3" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#1d4ed8;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="228.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="funds_field_3" value="currency" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="116.0" y="228.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="funds_type_3" value="varchar(3)" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="335.0" y="228.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="funds_shade_4" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="1.0" y="262.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="funds_key_4" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#1d4ed8;fontStyle=1;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="262.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="funds_field_4" value="active" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="116.0" y="262.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="funds_type_4" value="boolean = true" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="335.0" y="262.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="funds_note_0" value="ISIN único · divisa del NAV" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="306.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="funds_note_1" value="Puede existir sin una fuente configurada." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="funds">
+          <mxGeometry as="geometry" x="22.0" y="329.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="data_sources" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#cbd5e1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="770" y="190" width="570" height="362" />
+        </mxCell>
+        <mxCell id="data_sources_bar" value="" style="fillColor=#0f766e;strokeColor=none;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="0.0" y="14.0" width="5" height="54" />
+        </mxCell>
+        <mxCell id="data_sources_name" value="02  data_sources" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=23;fontColor=#0f766e;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="15.0" width="520" height="32" />
+        </mxCell>
+        <mxCell id="data_sources_sub" value="Proveedores de datos" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#334155;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="52.0" width="525" height="25" />
+        </mxCell>
+        <mxCell id="data_sources_head_key" value="CLAVE" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="93.0" width="80" height="20" />
+        </mxCell>
+        <mxCell id="data_sources_head_field" value="CAMPO" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="116.0" y="93.0" width="220" height="20" />
+        </mxCell>
+        <mxCell id="data_sources_head_type" value="TIPO / VALOR INICIAL" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="335.0" y="93.0" width="215" height="20" />
+        </mxCell>
+        <mxCell id="data_sources_shade_0" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="1.0" y="126.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_key_0" value="PK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#0f766e;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="126.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_field_0" value="id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="116.0" y="126.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_type_0" value="bigint · identity" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="335.0" y="126.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_key_1" value="UQ" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#0f766e;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="160.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_field_1" value="code" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="116.0" y="160.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_type_1" value="text" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="335.0" y="160.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_shade_2" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="1.0" y="194.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_key_2" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#0f766e;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="194.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_field_2" value="name" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="116.0" y="194.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_type_2" value="text" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="335.0" y="194.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_key_3" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#0f766e;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="228.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_field_3" value="base_url" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="116.0" y="228.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_type_3" value="text" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="335.0" y="228.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_shade_4" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="1.0" y="262.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_key_4" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#0f766e;fontStyle=1;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="262.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_field_4" value="active" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="116.0" y="262.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_type_4" value="boolean = true" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="335.0" y="262.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="data_sources_note_0" value="code identifica el adaptador Python." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="306.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="data_sources_note_1" value="Direcciones sin tokens ni contraseñas." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="data_sources">
+          <mxGeometry as="geometry" x="22.0" y="329.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="fund_sources" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#cbd5e1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="650" width="570" height="430" />
+        </mxCell>
+        <mxCell id="fund_sources_bar" value="" style="fillColor=#6d28d9;strokeColor=none;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="0.0" y="14.0" width="5" height="54" />
+        </mxCell>
+        <mxCell id="fund_sources_name" value="03  fund_sources" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=23;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="15.0" width="520" height="32" />
+        </mxCell>
+        <mxCell id="fund_sources_sub" value="Dónde consultar cada fondo" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#334155;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="52.0" width="525" height="25" />
+        </mxCell>
+        <mxCell id="fund_sources_head_key" value="CLAVE" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="93.0" width="80" height="20" />
+        </mxCell>
+        <mxCell id="fund_sources_head_field" value="CAMPO" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="93.0" width="220" height="20" />
+        </mxCell>
+        <mxCell id="fund_sources_head_type" value="TIPO / VALOR INICIAL" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="93.0" width="215" height="20" />
+        </mxCell>
+        <mxCell id="fund_sources_shade_0" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="1.0" y="126.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_0" value="PK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="126.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_0" value="id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="126.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_0" value="bigint · identity" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="126.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_1" value="FK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="160.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_1" value="fund_id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="160.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_1" value="bigint" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="160.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_shade_2" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="1.0" y="194.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_2" value="FK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="194.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_2" value="source_id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="194.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_2" value="bigint" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="194.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_3" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="228.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_3" value="external_id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="228.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_3" value="text · opcional" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="228.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_shade_4" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="1.0" y="262.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_4" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="262.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_4" value="nav_url" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="262.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_4" value="text · opcional" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="262.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_5" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="296.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_5" value="priority" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="296.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_5" value="integer = 1" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="296.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_shade_6" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="1.0" y="330.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_key_6" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#6d28d9;fontStyle=1;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="330.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_field_6" value="active" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="116.0" y="330.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_type_6" value="boolean = true" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="335.0" y="330.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_sources_note_0" value="UQ (fund_id, source_id) · UQ (fund_id, id)" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="374.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="fund_sources_note_1" value="priority &gt; 0 · menor número = preferencia" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_sources">
+          <mxGeometry as="geometry" x="22.0" y="397.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="fund_navs" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#cbd5e1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="770" y="650" width="570" height="362" />
+        </mxCell>
+        <mxCell id="fund_navs_bar" value="" style="fillColor=#b45309;strokeColor=none;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="0.0" y="14.0" width="5" height="54" />
+        </mxCell>
+        <mxCell id="fund_navs_name" value="04  fund_navs" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=23;fontColor=#b45309;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="15.0" width="520" height="32" />
+        </mxCell>
+        <mxCell id="fund_navs_sub" value="Histórico con procedencia" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#334155;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="52.0" width="525" height="25" />
+        </mxCell>
+        <mxCell id="fund_navs_head_key" value="CLAVE" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="93.0" width="80" height="20" />
+        </mxCell>
+        <mxCell id="fund_navs_head_field" value="CAMPO" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="116.0" y="93.0" width="220" height="20" />
+        </mxCell>
+        <mxCell id="fund_navs_head_type" value="TIPO / VALOR INICIAL" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=11;fontColor=#64748b;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="335.0" y="93.0" width="215" height="20" />
+        </mxCell>
+        <mxCell id="fund_navs_shade_0" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="1.0" y="126.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_key_0" value="PK, FK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#b45309;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="126.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_field_0" value="fund_id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="116.0" y="126.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_type_0" value="bigint" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="335.0" y="126.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_key_1" value="PK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#b45309;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="160.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_field_1" value="nav_date" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="116.0" y="160.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_type_1" value="date" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="335.0" y="160.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_shade_2" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="1.0" y="194.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_key_2" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#b45309;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="194.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_field_2" value="nav_value" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="116.0" y="194.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_type_2" value="numeric(80,48)" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="335.0" y="194.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_key_3" value="FK" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#b45309;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="228.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_field_3" value="fund_source_id" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="116.0" y="228.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_type_3" value="bigint" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="335.0" y="228.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_shade_4" value="" style="fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="1.0" y="262.0" width="568" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_key_4" value="" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#b45309;fontStyle=1;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="262.0" width="90" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_field_4" value="fetched_at" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#0f172a;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="116.0" y="262.0" width="220" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_type_4" value="timestamptz = now()" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="335.0" y="262.0" width="230" height="34" />
+        </mxCell>
+        <mxCell id="fund_navs_note_0" value="PK (fund_id, nav_date) · valor positivo" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="306.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="fund_navs_note_1" value="FK (fund_id, fund_source_id) → (fund_id, id)" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="fund_navs">
+          <mxGeometry as="geometry" x="22.0" y="329.0" width="530" height="23" />
+        </mxCell>
+        <mxCell id="fund_to_mapping" parent="1" source="funds" target="fund_sources" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#64748b;strokeWidth=2;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;exitX=0.26316;exitY=1;entryX=0.26316;entryY=0;">
           <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="source_to_mapping" parent="1" source="data_sources" target="fund_sources" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#64748b;strokeWidth=2;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;exitX=0.5;exitY=1;entryX=0.75439;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1055" y="590" />
+              <mxPoint x="490" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mapping_to_nav" parent="1" source="fund_sources" target="fund_navs" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#64748b;strokeWidth=2;startArrow=ERone;endArrow=ERzeroToMany;startFill=0;endFill=0;exitX=1;exitY=0.37209;entryX=0;entryY=0.44199;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="fund_rel" value="1 → 0..N" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=1;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="65" y="598" width="140" height="25" />
+        </mxCell>
+        <mxCell id="source_rel" value="1 proveedor → 0..N asociaciones" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=1;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="660" y="555" width="300" height="25" />
+        </mxCell>
+        <mxCell id="nav_rel" value="1 → 0..N" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#475569;fontStyle=1;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="652" y="769" width="110" height="24" />
+        </mxCell>
+        <mxCell id="nav_rel_note" value="FK compuesta" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=12;fontColor=#475569;fontStyle=0;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="654" y="828" width="108" height="24" />
+        </mxCell>
+        <mxCell id="legend" value="PK: clave primaria   ·   FK: clave foránea   ·   UQ: único   ·   NOT NULL salvo los campos marcados como opcionales" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#334155;fontStyle=0;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="1100" width="1280" height="24" />
+        </mxCell>
+        <mxCell id="footer" value="Un NAV por fondo y fecha. Las referencias protegen el histórico: no hay borrados en cascada." style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=14;fontColor=#64748b;fontStyle=0;spacing=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="1130" width="1280" height="22" />
         </mxCell>
       </root>
     </mxGraphModel>

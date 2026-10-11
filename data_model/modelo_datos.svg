@@ -1,44 +1,135 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500">
-<rect width="1100" height="500" fill="white"/>
-<g font-family="Arial, sans-serif" fill="#0f172a">
-<text x="50" y="50" font-size="24">Modelo de datos · PostgreSQL</text>
-<rect x="50" y="100" width="390" height="250" rx="8" fill="#f1f5f9" stroke="#64748b"/>
-<text x="68" y="130" font-size="20" font-weight="bold">funds</text>
-<path d="M50 145h390" stroke="#64748b"/>
-<text x="65" y="178" font-size="12" fill="#475569">PK</text>
-<text x="125" y="178" font-size="15">id</text>
-<text x="255" y="178" font-size="14" fill="#475569">bigint · identity</text>
-<text x="65" y="212" font-size="12" fill="#475569">UQ</text>
-<text x="125" y="212" font-size="15">isin</text>
-<text x="255" y="212" font-size="14" fill="#475569">varchar(12)</text>
-<text x="65" y="246" font-size="12" fill="#475569"></text>
-<text x="125" y="246" font-size="15">name</text>
-<text x="255" y="246" font-size="14" fill="#475569">text</text>
-<text x="65" y="280" font-size="12" fill="#475569"></text>
-<text x="125" y="280" font-size="15">currency</text>
-<text x="255" y="280" font-size="14" fill="#475569">varchar(3)</text>
-<text x="65" y="314" font-size="12" fill="#475569"></text>
-<text x="125" y="314" font-size="15">active</text>
-<text x="255" y="314" font-size="14" fill="#475569">boolean</text>
-<rect x="650" y="100" width="390" height="250" rx="8" fill="#f1f5f9" stroke="#64748b"/>
-<text x="668" y="130" font-size="20" font-weight="bold">fund_navs</text>
-<path d="M650 145h390" stroke="#64748b"/>
-<text x="665" y="178" font-size="12" fill="#475569">PK, FK</text>
-<text x="725" y="178" font-size="15">fund_id</text>
-<text x="855" y="178" font-size="14" fill="#475569">bigint</text>
-<text x="665" y="212" font-size="12" fill="#475569">PK</text>
-<text x="725" y="212" font-size="15">nav_date</text>
-<text x="855" y="212" font-size="14" fill="#475569">date</text>
-<text x="665" y="246" font-size="12" fill="#475569"></text>
-<text x="725" y="246" font-size="15">nav_value</text>
-<text x="855" y="246" font-size="14" fill="#475569">numeric(80,48)</text>
-<text x="665" y="280" font-size="12" fill="#475569"></text>
-<text x="725" y="280" font-size="15">fetched_at</text>
-<text x="855" y="280" font-size="14" fill="#475569">timestamptz</text>
-<path d="M440 225H650 M452 214V236 M462 214V236 M635 225L650 213 M635 225L650 237" fill="none" stroke="#64748b" stroke-width="2"/>
-<circle cx="622" cy="225" r="6" fill="white" stroke="#64748b" stroke-width="2"/>
-<text x="535" y="207" text-anchor="middle" font-size="16">1 → 0..N</text>
-<text x="50" y="400" font-size="15">Esquema configurable: [SCHEMA_PLACEHOLDER]</text>
-<text x="50" y="428" font-size="15">Todos los campos son NOT NULL. PK = clave primaria · FK = clave foránea · UQ = único.</text>
-<text x="50" y="456" font-size="15">PK compuesta de fund_navs: (fund_id, nav_date). Cada NAV pertenece a un fondo.</text>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1170" viewBox="0 0 1400 1170" role="img" aria-labelledby="title desc">
+<title id="title">Modelo entidad-relación del bot de valores liquidativos</title>
+<desc id="desc">Cuatro tablas. Fondos y proveedores se relacionan mediante fund_sources. Cada valor liquidativo referencia una asociación del mismo fondo mediante una clave foránea compuesta.</desc>
+<rect width="1400" height="1170" fill="#f8fafc"/>
+<text x="60" y="48.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#64748b" font-weight="700">FUND NAV FETCHER  /  POSTGRESQL</text>
+<text x="60" y="92.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="30" fill="#0f172a" font-weight="700">Modelo de datos · fondos, fuentes y valores</text>
+<text x="60" y="133.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="16" fill="#334155" font-weight="400">Orden de creación 01 → 02 → 03 → 04   ·   Esquema configurable: [SCHEMA_PLACEHOLDER]</text>
+<rect x="60" y="190" width="570" height="362" rx="12" fill="white" stroke="#cbd5e1"/>
+<rect x="60" y="204" width="5" height="54" fill="#1d4ed8"/>
+<text x="82" y="221.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="23" fill="#1d4ed8" font-weight="700">01  funds</text>
+<text x="82" y="254.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155" font-weight="400">Fondos seguidos</text>
+<text x="82" y="293.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CLAVE</text>
+<text x="176" y="293.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CAMPO</text>
+<text x="395" y="293.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">TIPO / VALOR INICIAL</text>
+<rect x="61" y="316" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="333.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#1d4ed8" font-weight="700">PK</text>
+<text x="176" y="333.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">id</text>
+<text x="395" y="333.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint · identity</text>
+<text x="82" y="367.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#1d4ed8" font-weight="700">UQ</text>
+<text x="176" y="367.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">isin</text>
+<text x="395" y="367.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">varchar(12)</text>
+<rect x="61" y="384" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="401.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#1d4ed8" font-weight="700"></text>
+<text x="176" y="401.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">name</text>
+<text x="395" y="401.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">text</text>
+<text x="82" y="435.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#1d4ed8" font-weight="700"></text>
+<text x="176" y="435.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">currency</text>
+<text x="395" y="435.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">varchar(3)</text>
+<rect x="61" y="452" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="469.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#1d4ed8" font-weight="700"></text>
+<text x="176" y="469.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">active</text>
+<text x="395" y="469.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">boolean = true</text>
+<text x="82" y="507.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">ISIN único · divisa del NAV</text>
+<text x="82" y="530.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">Puede existir sin una fuente configurada.</text>
+<rect x="770" y="190" width="570" height="362" rx="12" fill="white" stroke="#cbd5e1"/>
+<rect x="770" y="204" width="5" height="54" fill="#0f766e"/>
+<text x="792" y="221.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="23" fill="#0f766e" font-weight="700">02  data_sources</text>
+<text x="792" y="254.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155" font-weight="400">Proveedores de datos</text>
+<text x="792" y="293.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CLAVE</text>
+<text x="886" y="293.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CAMPO</text>
+<text x="1105" y="293.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">TIPO / VALOR INICIAL</text>
+<rect x="771" y="316" width="568" height="34" fill="#f1f5f9"/>
+<text x="792" y="333.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#0f766e" font-weight="700">PK</text>
+<text x="886" y="333.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">id</text>
+<text x="1105" y="333.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint · identity</text>
+<text x="792" y="367.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#0f766e" font-weight="700">UQ</text>
+<text x="886" y="367.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">code</text>
+<text x="1105" y="367.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">text</text>
+<rect x="771" y="384" width="568" height="34" fill="#f1f5f9"/>
+<text x="792" y="401.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#0f766e" font-weight="700"></text>
+<text x="886" y="401.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">name</text>
+<text x="1105" y="401.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">text</text>
+<text x="792" y="435.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#0f766e" font-weight="700"></text>
+<text x="886" y="435.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">base_url</text>
+<text x="1105" y="435.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">text</text>
+<rect x="771" y="452" width="568" height="34" fill="#f1f5f9"/>
+<text x="792" y="469.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#0f766e" font-weight="700"></text>
+<text x="886" y="469.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">active</text>
+<text x="1105" y="469.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">boolean = true</text>
+<text x="792" y="507.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">code identifica el adaptador Python.</text>
+<text x="792" y="530.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">Direcciones sin tokens ni contraseñas.</text>
+<rect x="60" y="650" width="570" height="430" rx="12" fill="white" stroke="#cbd5e1"/>
+<rect x="60" y="664" width="5" height="54" fill="#6d28d9"/>
+<text x="82" y="681.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="23" fill="#6d28d9" font-weight="700">03  fund_sources</text>
+<text x="82" y="714.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155" font-weight="400">Dónde consultar cada fondo</text>
+<text x="82" y="753.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CLAVE</text>
+<text x="176" y="753.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CAMPO</text>
+<text x="395" y="753.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">TIPO / VALOR INICIAL</text>
+<rect x="61" y="776" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="793.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700">PK</text>
+<text x="176" y="793.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">id</text>
+<text x="395" y="793.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint · identity</text>
+<text x="82" y="827.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700">FK</text>
+<text x="176" y="827.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">fund_id</text>
+<text x="395" y="827.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint</text>
+<rect x="61" y="844" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="861.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700">FK</text>
+<text x="176" y="861.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">source_id</text>
+<text x="395" y="861.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint</text>
+<text x="82" y="895.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700"></text>
+<text x="176" y="895.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">external_id</text>
+<text x="395" y="895.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">text · opcional</text>
+<rect x="61" y="912" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="929.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700"></text>
+<text x="176" y="929.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">nav_url</text>
+<text x="395" y="929.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">text · opcional</text>
+<text x="82" y="963.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700"></text>
+<text x="176" y="963.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">priority</text>
+<text x="395" y="963.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">integer = 1</text>
+<rect x="61" y="980" width="568" height="34" fill="#f1f5f9"/>
+<text x="82" y="997.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#6d28d9" font-weight="700"></text>
+<text x="176" y="997.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">active</text>
+<text x="395" y="997.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">boolean = true</text>
+<text x="82" y="1035.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">UQ (fund_id, source_id) · UQ (fund_id, id)</text>
+<text x="82" y="1058.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">priority &gt; 0 · menor número = preferencia</text>
+<rect x="770" y="650" width="570" height="362" rx="12" fill="white" stroke="#cbd5e1"/>
+<rect x="770" y="664" width="5" height="54" fill="#b45309"/>
+<text x="792" y="681.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="23" fill="#b45309" font-weight="700">04  fund_navs</text>
+<text x="792" y="714.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155" font-weight="400">Histórico con procedencia</text>
+<text x="792" y="753.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CLAVE</text>
+<text x="886" y="753.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">CAMPO</text>
+<text x="1105" y="753.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-weight="700">TIPO / VALOR INICIAL</text>
+<rect x="771" y="776" width="568" height="34" fill="#f1f5f9"/>
+<text x="792" y="793.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#b45309" font-weight="700">PK, FK</text>
+<text x="886" y="793.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">fund_id</text>
+<text x="1105" y="793.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint</text>
+<text x="792" y="827.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#b45309" font-weight="700">PK</text>
+<text x="886" y="827.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">nav_date</text>
+<text x="1105" y="827.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">date</text>
+<rect x="771" y="844" width="568" height="34" fill="#f1f5f9"/>
+<text x="792" y="861.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#b45309" font-weight="700"></text>
+<text x="886" y="861.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">nav_value</text>
+<text x="1105" y="861.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">numeric(80,48)</text>
+<text x="792" y="895.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#b45309" font-weight="700">FK</text>
+<text x="886" y="895.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">fund_source_id</text>
+<text x="1105" y="895.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">bigint</text>
+<rect x="771" y="912" width="568" height="34" fill="#f1f5f9"/>
+<text x="792" y="929.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#b45309" font-weight="700"></text>
+<text x="886" y="929.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="15" fill="#0f172a" font-weight="400">fetched_at</text>
+<text x="1105" y="929.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="400">timestamptz = now()</text>
+<text x="792" y="967.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">PK (fund_id, nav_date) · valor positivo</text>
+<text x="792" y="990.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569" font-weight="400">FK (fund_id, fund_source_id) → (fund_id, id)</text>
+<polyline points="210,552 210,650" fill="none" stroke="#64748b" stroke-width="2"/>
+<path d="M 203 561 H 217 M 202 650 L 210 635 L 218 650" fill="none" stroke="#64748b" stroke-width="2"/><circle cx="210" cy="626" r="4" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+<polyline points="1055,552 1055,590 490,590 490,650" fill="none" stroke="#64748b" stroke-width="2"/>
+<path d="M 1048 561 H 1062 M 482 650 L 490 635 L 498 650" fill="none" stroke="#64748b" stroke-width="2"/><circle cx="490" cy="626" r="4" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+<polyline points="630,810 770,810" fill="none" stroke="#64748b" stroke-width="2"/>
+<path d="M 639 803 V 817 M 770 802 L 755 810 L 770 818" fill="none" stroke="#64748b" stroke-width="2"/><circle cx="746" cy="810" r="4" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+<text x="65" y="610.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="700">1 → 0..N</text>
+<text x="660" y="567.5" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="700">1 proveedor → 0..N asociaciones</text>
+<text x="652" y="781.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569" font-weight="700">1 → 0..N</text>
+<text x="654" y="840.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569" font-weight="400">FK compuesta</text>
+<text x="60" y="1112.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#334155" font-weight="400">PK: clave primaria   ·   FK: clave foránea   ·   UQ: único   ·   NOT NULL salvo los campos marcados como opcionales</text>
+<text x="60" y="1141.0" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="14" fill="#64748b" font-weight="400">Un NAV por fondo y fecha. Las referencias protegen el histórico: no hay borrados en cascada.</text>
+</svg>
