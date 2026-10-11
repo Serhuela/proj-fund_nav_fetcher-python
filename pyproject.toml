@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Obtención y almacenamiento de valores liquidativos de fondos de inversión."
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = ["PyYAML>=6.0.2,<7"]
 
 [dependency-groups]
 dev = [
@@ -35,3 +35,6 @@ addopts = [
     "--durations=10",
     "-ra",
 ]
+
+[tool.setuptools.package-data]
+utils = ["config.yaml"]

@@ -1,0 +1,8 @@
+# Parámetros iniciales de ejecución. No almacenar secretos en este fichero.
+database:
+  schema: nav
+collection:
+  # Tiempo entre rondas de recogida: una hora.
+  interval_seconds: 3600
+  # Espera antes de reintentar una consulta fallida.
+  retry_delay_seconds: 60
