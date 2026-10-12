@@ -1,0 +1,27 @@
+\chapter{Despliegue a producción}
+
+La aplicación se ejecuta como un servicio Docker en el servidor personal \emph{Bigoci}. Su despliegue se
+automatiza con GitHub Actions y utiliza Docker Hub como registro de imágenes,
+desde el que el servidor descarga la versión que debe ejecutar.
+
+\section{Construcción y publicación}
+
+Cada actualización de la rama \texttt{main} activa el flujo de GitHub Actions.
+Primero se construye una imagen para Linux ARM64, basada en Python 3.13, que
+incluye la aplicación y sus dependencias de ejecución. La imagen se publica
+en Docker Hub como \path{serhuela/fund-nav-fetcher:latest}.
+
+Docker Hub almacena la imagen preparada para su ejecución; el despliegue
+consumirá esa imagen sin volver a construirla. La etiqueta \texttt{latest} se
+actualiza con cada publicación.
+
+\section{Actualización y ejecución del servicio}
+
+Una vez publicada la imagen, GitHub Actions copia la configuración de Docker
+Compose al servidor personal \emph{Bigoci} y accede a él mediante SSH.
+Descarga la imagen y recrea el contenedor con Docker Compose.
+
+El contenedor arranca con \path{APP_ENV=production} y ejecuta la aplicación
+con un usuario sin privilegios de administrador. Docker Compose configura el
+reinicio automático del servicio, salvo que se haya detenido expresamente,
+y limita los registros a veinte archivos de cinco megabytes cada uno.
