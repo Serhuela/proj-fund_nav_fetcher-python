@@ -2,7 +2,7 @@
 
 Utilidades compartidas para la configuración y los mensajes de log de la aplicación.
 
-## `custom_logging.py`
+## Logs
 
 Importa `get_logger` y pásale `__name__` para obtener el logger de tu módulo.
 Los mensajes se envían a stdout con nivel DEBUG si `APP_ENV` es `development`
@@ -15,13 +15,16 @@ logger = get_logger(__name__)
 logger.info("Aplicación iniciada")
 ```
 
-## `configuration.py`
+## Configuración
 
-Crea una instancia de `Configuration` y lee los parámetros con `get()`, usando
-puntos para acceder a claves anidadas. Por defecto carga el `config.yaml` de esta
-carpeta; puedes indicar otra ruta al crear la instancia o mediante `APP_CONFIG_FILE`.
-Las variables de entorno tienen prioridad sobre el YAML: `DATABASE__SCHEMA`
-sobrescribe `database.schema`.
+Los parámetros se resuelven en este orden de prioridad:
+
+1. Variables de entorno.
+2. Perfil activo (`development` o `production`) del YAML.
+3. Valores comunes de la sección `default` del mismo YAML.
+
+`APP_ENV` selecciona el perfil; por defecto se usa `development` (excepto en producción que ya lo fija el dockerfile en `production`). La configuración
+está en `config.yaml`; `APP_CONFIG_FILE` permite indicar otra ruta.
 
 ```python
 from utils.configuration import Configuration

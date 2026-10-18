@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" version="24.7.17" type="device">
+  <diagram id="fund-class-diagram" name="Clases - alta de fondo">
+    <mxGraphModel dx="1280" dy="860" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1280" pageHeight="860" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="&lt;b&gt;Diagrama de clases · alta de un fondo&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="45" y="25" width="1175" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="scope" value="DataService coordina una operación; el repositorio de fondos usa una conexión PostgreSQL compartida" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontColor=#546e7a;" vertex="1" parent="1">
+          <mxGeometry x="45" y="82" width="1175" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="heading_service" value="&lt;b&gt;1 · Servicio de aplicación&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;fontColor=#8055a6;" vertex="1" parent="1">
+          <mxGeometry x="45" y="140" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="heading_repository" value="&lt;b&gt;2 · Repositorios&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;fontColor=#5279a7;" vertex="1" parent="1">
+          <mxGeometry x="455" y="140" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="heading_postgres" value="&lt;b&gt;3 · Persistencia PostgreSQL&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;fontColor=#5279a7;" vertex="1" parent="1">
+          <mxGeometry x="875" y="260" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="data_service" value="&lt;div style=&quot;padding:5px 10px;background-color:#f2e8ff;border-bottom:1px solid #8055a6;&quot;&gt;&lt;i&gt;servicio de aplicación&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;font-size:16px&quot;&gt;DataService&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:5px 10px;&quot;&gt;+ register_fund(isin, name, currency): Fund&lt;br&gt;&lt;br&gt;Valida las entradas y coordina el alta.&lt;br&gt;Decide el commit o rollback de la operación.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=0;fillColor=#ffffff;strokeColor=#8055a6;fontColor=#263238;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="45" y="180" width="350" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="repository" value="&lt;div style=&quot;padding:5px 10px;background-color:#e6f4ea;border-bottom:1px solid #4d8a5c;&quot;&gt;&lt;i&gt;clase abstracta · contrato común&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;font-size:16px&quot;&gt;Repository&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:5px 10px;&quot;&gt;+ __init__(postgres: Postgres)&lt;br&gt;Comparte la dependencia de persistencia.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=0;fillColor=#ffffff;strokeColor=#4d8a5c;fontColor=#263238;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="455" y="180" width="330" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="funds_repository" value="&lt;div style=&quot;padding:5px 10px;background-color:#e8f1fb;border-bottom:1px solid #5279a7;&quot;&gt;&lt;i&gt;repositorio concreto&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;font-size:16px&quot;&gt;FundsRepository&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:5px 10px;&quot;&gt;+ create(isin, name, currency): Fund&lt;br&gt;&lt;br&gt;Conoce la tabla funds y sus columnas.&lt;br&gt;Construye la consulta y mapea la fila a Fund.&lt;br&gt;No confirma la transacción ni llama a otros repositorios.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=0;fillColor=#ffffff;strokeColor=#5279a7;fontColor=#263238;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="455" y="455" width="350" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="postgres" value="&lt;div style=&quot;padding:5px 10px;background-color:#e8f1fb;border-bottom:1px solid #5279a7;&quot;&gt;&lt;i&gt;conexión y ejecución PostgreSQL&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;font-size:16px&quot;&gt;Postgres&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:5px 10px;&quot;&gt;+ execute(query, parameters): row&lt;br&gt;+ commit()&lt;br&gt;+ rollback()&lt;br&gt;&lt;br&gt;Mantiene la conexión compartida durante la operación.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=0;fillColor=#ffffff;strokeColor=#5279a7;fontColor=#263238;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="875" y="300" width="350" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="fund" value="&lt;div style=&quot;padding:5px 10px;background-color:#fff3cd;border-bottom:1px solid #b58b19;&quot;&gt;&lt;i&gt;modelo de datos&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;font-size:16px&quot;&gt;Fund&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;padding:5px 10px;&quot;&gt;id: int&lt;br&gt;isin: str&lt;br&gt;name: str&lt;br&gt;currency: str&lt;br&gt;active: bool&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=0;fillColor=#ffffff;strokeColor=#b58b19;fontColor=#263238;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="45" y="505" width="350" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="data_service_uses_repository" edge="1" parent="1" source="data_service" target="repository" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#8055a6;strokeWidth=2;endArrow=open;endFill=0;fontSize=13;fontColor=#5d4773;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="funds_repository_implements_repository" edge="1" parent="1" source="funds_repository" target="repository" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#5279a7;strokeWidth=2;endArrow=block;endFill=0;fontSize=13;fontColor=#36536f;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="funds_repository_uses_postgres" edge="1" parent="1" source="funds_repository" target="postgres" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#5279a7;strokeWidth=2;endArrow=open;endFill=0;fontSize=13;fontColor=#36536f;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="840" y="560" />
+              <mxPoint x="840" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="data_service_controls_transaction" edge="1" parent="1" source="data_service" target="postgres" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#8055a6;strokeWidth=2;endArrow=open;endFill=0;fontSize=13;fontColor=#5d4773;labelBackgroundColor=#ffffff;exitX=0.9;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="410" y="130" />
+              <mxPoint x="850" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="funds_repository_returns_fund" edge="1" parent="1" source="funds_repository" target="fund" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b58b19;strokeWidth=2;endArrow=open;endFill=0;fontSize=13;fontColor=#806916;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label_service_repository" value="usa" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#5d4773;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="400" y="245" width="45" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="label_implements" value="implementa" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#36536f;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="640" y="370" width="90" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="label_uses_postgres" value="ejecuta SQL" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#36536f;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="820" y="465" width="92" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="label_transaction" value="controla transacción" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#5d4773;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="610" y="117" width="145" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="label_returns_fund" value="devuelve" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#806916;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="395" y="600" width="70" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="notes" value="&lt;b&gt;Transacción:&lt;/b&gt; una única conexión compartida por la operación; DataService solicita commit si todo termina correctamente o rollback ante un error.&lt;br&gt;&lt;b&gt;Integridad:&lt;/b&gt; PostgreSQL aplica las claves foráneas; los repositorios no se llaman entre sí." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;fillColor=#f5f7f8;strokeColor=#b0bec5;fontColor=#37474f;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="45" y="735" width="1180" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

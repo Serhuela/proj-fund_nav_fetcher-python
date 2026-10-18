@@ -2,6 +2,8 @@
 
 Se utiliza PostgreSQL gestionado en el repositorio
 \href{https://github.com/Serhuela/infra-postgresql-terraform}{infra-postgresql-terraform}.
+El aprovisionamiento de las bases de datos, los esquemas y los usuarios corresponde
+a esa infraestructura; este proyecto consume los recursos que se le proporcionan.
 
 \section{Bases de datos y esquemas}
 
@@ -15,6 +17,9 @@ Esquema & \texttt{nav} & \texttt{nav} \\
 \bottomrule
 \end{projecttable}
 
+El esquema \texttt{nav} se crea fuera de este proyecto y está disponible antes de
+desplegar la aplicación. La aplicación no crea ni elimina esquemas.
+
 \section{Usuarios}
 
 \begin{projecttable}
@@ -26,3 +31,9 @@ DDL & \path{psql_user_dev_fund_nav_deploy} & \path{psql_user_pro_fund_nav_deploy
 DML & \path{psql_user_dev_fund_nav_bot} & \path{psql_user_pro_fund_nav_bot} \\
 \bottomrule
 \end{projecttable}
+
+La infraestructura proporciona ambos usuarios para cada entorno. El usuario DDL
+puede crear, modificar y eliminar objetos dentro del esquema asignado, pero no
+crear ni eliminar esquemas. El usuario DML puede consultar y modificar los datos
+de las tablas del esquema asignado (\texttt{SELECT}, \texttt{INSERT},
+\texttt{UPDATE} y \texttt{DELETE}).

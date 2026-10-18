@@ -1,8 +1,23 @@
-# Parámetros iniciales de ejecución. No almacenar secretos en este fichero.
-database:
-  schema: nav
-collection:
-  # Tiempo entre rondas de recogida: una hora.
-  interval_seconds: 3600
-  # Espera antes de reintentar una consulta fallida.
-  retry_delay_seconds: 60
+# Parámetros de ejecución. No almacenar secretos en este fichero.
+# APP_ENV selecciona development o production.
+# Las variables de entorno sobrescriben los valores aquí presentes.
+default:
+  # Opciones comunes; un perfil puede sobrescribirlas si lo necesita.
+  database:
+    host: bigoci.otzo.com
+    port: 5432
+    connect_timeout: 10
+    sslmode: require
+    schema: nav
+  collection:
+    # Tiempo entre rondas de recogida: una hora.
+    interval_seconds: 3600
+    # Espera antes de reintentar una consulta fallida.
+    retry_delay_seconds: 60
+
+development:
+  database:
+    name: psql_ddbb_dev_fund_nav
+
+production:
+    name: psql_ddbb_pro_fund_nav

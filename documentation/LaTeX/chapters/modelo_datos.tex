@@ -53,6 +53,14 @@ Contiene los fondos que la aplicación debe seguir. El ISIN es obligatorio y
 interna \path{id} se utiliza en las relaciones entre tablas. Un fondo puede
 registrarse antes de configurar sus fuentes.
 
+Los fondos nunca se eliminan de \path{funds}. Cuando se deja de seguir un fondo,
+se desactiva estableciendo \path{funds.active = false}. Esta operación detiene
+la recogida de nuevos valores liquidativos y conserva el registro del fondo,
+sus asociaciones en \path{fund_sources} y su histórico en \path{fund_navs}.
+Si se vuelve a seguir el fondo, se reactiva el mismo registro mediante
+\path{funds.active = true}; la recogida requiere también una asociación y un
+proveedor activos.
+
 Los identificadores internos de los ejemplos son ilustrativos.
 
 \modeltablebefore
@@ -79,6 +87,15 @@ Los identificadores internos de los ejemplos son ilustrativos.
 Define cada proveedor de valores liquidativos de forma independiente de los
 fondos que comercializa. El campo \path{code} identifica el adaptador Python
 que implementa la consulta.
+
+Los proveedores nunca se eliminan de \path{data_sources}. Cuando se deja de
+consultar un proveedor, se desactiva estableciendo
+\path{data_sources.active = false}. Esta operación detiene las consultas a ese
+proveedor y conserva su registro, sus asociaciones en \path{fund_sources} y el
+histórico de valores liquidativos que aportó en \path{fund_navs}, incluida su
+procedencia. Si se vuelve a consultar el proveedor, se reactiva el mismo
+registro mediante \path{data_sources.active = true}; la recogida requiere
+también un fondo y una asociación activos.
 
 \modeltablebefore
 \begin{tabularx}{\dimexpr\paperheight-5cm\relax}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X@{}}

@@ -1,9 +1,11 @@
-"""Verifica code/utils/configuration.py mediante ficheros temporales.
+"""Verifica code/utils/configuration.py con un YAML de prueba aislado.
 
 Cubre prioridad de entorno/YAML/default, rutas, conversiones y errores sin
 valores sensibles. No cubre despliegue Docker, credenciales reales ni validación
 de reglas de negocio del bot.
 """
+
+from pathlib import Path
 
 import pytest
 
@@ -11,11 +13,10 @@ from utils.configuration import Configuration, ConfigurationError
 
 
 @pytest.fixture
-def config_file(tmp_path):
-    """Crea un YAML mínimo para comprobar lectura y sobrescritura."""
-    path = tmp_path / "config.yaml"
-    path.write_text("database:\n  schema: funds\ncollection:\n  interval_seconds: 3600\n", encoding="utf-8")
-    return path
+def config_file(monkeypatch):
+    """Selecciona el perfil de desarrollo del YAML ficticio de pruebas."""
+    monkeypatch.setenv("APP_ENV", "development")
+    return Path(__file__).with_name("fixtures") / "config.yaml"
 
 
 def test_yaml_environment_and_default(config_file, monkeypatch):
@@ -83,7 +84,9 @@ def test_path_selection(config_file, monkeypatch, tmp_path):
     assert environment_config.get("database.schema", env_var="TEST_SCHEMA") == "funds"
     monkeypatch.delenv("APP_CONFIG_FILE")
     monkeypatch.chdir(tmp_path)
-    assert Configuration().get("database.schema", env_var="TEST_SCHEMA") == "nav"
+    default_config = Configuration()
+    assert default_config.source_path.name == "config.yaml"
+    assert default_config.source_path.is_file()
 
 
 @pytest.mark.parametrize("contents", ["- list", "42", "password: [secret-value"])
@@ -98,6 +101,7 @@ def test_invalid_yaml(tmp_path, contents):
 
 def test_empty_yaml_and_required_values(tmp_path, monkeypatch):
     """Admite ficheros vacíos y detecta parámetros obligatorios ausentes."""
+    monkeypatch.setenv("APP_ENV", "development")
     monkeypatch.delenv("MISSING", raising=False)
     path = tmp_path / "empty.yaml"
     path.write_text("", encoding="utf-8")

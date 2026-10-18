@@ -1,0 +1,51 @@
+\chapter{Arquitectura de software}
+
+La arquitectura de la aplicación describe sus componentes internos y sus
+responsabilidades. La aplicación accede a los datos a través de un único servicio,
+\texttt{DataService}; no selecciona repositorios ni conoce tablas.
+
+\section{Responsabilidades del acceso a datos}
+
+\begin{description}
+    \item[\texttt{DataService}.] Expone operaciones completas a la aplicación,
+    comprueba las reglas de aplicación, coordina los repositorios implicados y
+    decide cuándo confirmar (\textit{commit}) o revertir (\textit{rollback}).
+    Traduce los errores de persistencia a resultados o excepciones comprensibles
+    para sus consumidores.
+    \item[\texttt{Repository} y sus repositorios concretos.] La interfaz común
+    fija el criterio compartido. Cada repositorio conoce su tabla, columnas,
+    claves y correspondencia con los modelos; realiza las consultas de su
+    responsabilidad y devuelve modelos o resultados definidos. No confirma
+    transacciones ni llama a otros repositorios.
+    \item[\texttt{Postgres}.] Gestiona la conexión y ejecuta las operaciones
+    contra PostgreSQL. Proporciona una única conexión transaccional compartida
+    por los repositorios participantes y realiza el \textit{commit} o el
+    \textit{rollback} que solicita \texttt{DataService}. No contiene reglas de
+    aplicación ni conoce las entidades concretas.
+\end{description}
+
+Cada operación de \texttt{DataService} que modifica una o varias tablas utiliza
+una sola conexión a PostgreSQL, compartida por todos los repositorios que
+participan en ella. Así, sus consultas pertenecen a la misma transacción:
+\texttt{DataService} solicita el \textit{commit} si todas terminan correctamente
+y el \textit{rollback} si alguna falla. Se evita confirmar una parte de la
+operación y dejar el resto sin aplicar. Las claves foráneas y demás restricciones
+de integridad siguen siendo responsabilidad de PostgreSQL.
+
+Los repositorios construyen las consultas específicas de sus tablas. Cuando una
+operación sea común y genérica, \texttt{Postgres} puede ofrecer una primitiva
+reutilizable para ejecutarla. Cada repositorio solicita directamente a
+\texttt{Postgres} que ejecute sus consultas; \texttt{DataService} no transporta
+SQL ni resultados del controlador.
+
+Los repositorios no se llaman entre sí. Si una escritura referencia otra fila,
+no se consulta previamente su existencia solo para repetir la garantía de la
+clave foránea: PostgreSQL rechaza la escritura si la referencia no existe. El
+repositorio traduce las violaciones conocidas a errores comprensibles y
+\texttt{DataService} revierte la transacción y comunica el fallo. Las reglas de
+negocio que no cubren las restricciones referenciales, como exigir que una fuente
+esté habilitada, sí se comprueban desde \texttt{DataService} mediante los
+repositorios necesarios.
+
+La composición configura las dependencias y credenciales al iniciar la
+aplicación; ese detalle no se expone a la aplicación ni a las reglas de negocio.

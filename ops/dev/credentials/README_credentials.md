@@ -1,32 +1,14 @@
 # Credenciales de desarrollo
 
-Requisitos: Bash, [Bitwarden CLI (`bw`)](https://bitwarden.com/help/cli/) y `jq`.
+Esta carpeta reúne la configuración y las herramientas para cargar en la
+terminal las credenciales del entorno de desarrollo desde Bitwarden. Permite
+seleccionar las credenciales de los roles de base de datos usados por la
+aplicación y por las operaciones administrativas.
 
-## Cargar credenciales
+`bitwarden_items.json` identifica los elementos y campos que se consultan en
+Bitwarden. `load_dev_env.sh` los lee y exporta sus valores como variables de
+entorno en la sesión de Bash donde se carga con `source`.
 
-Desde la raíz del repositorio:
-
-```bash
-bw login # Solo si todavía no has iniciado sesión
-export BW_SESSION="$(bw unlock --raw)"
-bw sync
-source ops/dev/credentials/load_dev_env.sh
-```
-
-## Obtener los IDs para configurar el inventario
-
-Al crear [bitwarden_items.json](bitwarden_items.json), busca los IDs de los elementos de deploy y bot con la sesión de Bitwarden desbloqueada:
-
-```bash
-bw list items --search "fund_nav_fetcher" | jq -r '.[] | [.id, .name] | @tsv'
-```
-
-Copia cada ID como clave de su entrada correspondiente en `bitwarden_items.json`.
-
-## Al terminar
-
-```bash
-unset BBDD_DEPLOY_USERNAME BBDD_DEPLOY_PASSWORD BBDD_BOT_USERNAME BBDD_BOT_PASSWORD
-bw lock
-unset BW_SESSION
-```
+Para configurar el inventario, cargar las credenciales, resolver problemas de
+sesión o retirarlas al terminar, consulta la
+[guía de gestión de credenciales](gestion_credenciales.md).

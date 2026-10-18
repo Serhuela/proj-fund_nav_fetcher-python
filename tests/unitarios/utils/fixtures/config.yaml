@@ -1,0 +1,16 @@
+# Configuración ficticia para probar la carga de perfiles y valores.
+default:
+  database:
+    schema: default_schema
+  collection:
+    interval_seconds: 3600
+
+development:
+  database:
+    schema: funds
+  collection:
+    interval_seconds: 1800
+
+production:
+  database:
+    schema: production_test_schema

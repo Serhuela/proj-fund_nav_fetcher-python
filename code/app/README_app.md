@@ -1,7 +1,10 @@
 # Arranque de la aplicación
 
-Esta carpeta contiene los puntos de arranque de la aplicación:
+Puntos de entrada de desarrollo y del contenedor, con un arranque común que
+carga y registra la configuración y mantiene el bucle principal.
 
-- `main.py`: punto de entrada para desarrollo.
-- `entrypoint.py`: punto de entrada para el contenedor.
-- `application.py`: arranque común mediante `run()`, llamado por ambos puntos de entrada.
+Desde la raíz del repositorio, con el entorno activado y el proyecto instalado:
+
+```bash
+python -m app.main
+```

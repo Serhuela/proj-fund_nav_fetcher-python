@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860">
+<rect width="1280" height="860" fill="#ffffff"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#263238}.small{font-size:14px}.stereo{font-size:13px;font-style:italic;fill:#546e7a}.title{font-size:26px;font-weight:bold}.subtitle{font-size:16px;fill:#546e7a}.heading{font-size:17px;font-weight:bold}.edge{fill:none;stroke:#5279a7;stroke-width:2;stroke-dasharray:7 5}.dep{fill:none;stroke:#8055a6;stroke-width:2;stroke-dasharray:7 5}.gold{fill:none;stroke:#b58b19;stroke-width:2;stroke-dasharray:7 5}.edge-label{font-size:12px;fill:#36536f}.dep-label{font-size:12px;fill:#5d4773}.gold-label{font-size:12px;fill:#806916}</style>
+<text x="45" y="61" class="title">Diagrama de clases · alta de un fondo</text>
+<text x="45" y="104" class="subtitle">DataService coordina una operación; el repositorio de fondos usa una conexión PostgreSQL compartida</text>
+<text x="45" y="162" class="heading" fill="#8055a6">1 · Servicio de aplicación</text>
+<text x="455" y="162" class="heading" fill="#5279a7">2 · Repositorios</text>
+<text x="875" y="282" class="heading" fill="#5279a7">3 · Persistencia PostgreSQL</text>
+
+<path class="dep" d="M395 270 H455" marker-end="url(#openPurple)"/>
+<path class="edge" d="M630 455 V390 V325" marker-end="url(#triangleBlue)"/>
+<path class="edge" d="M805 560 H840 V430 H875" marker-end="url(#openBlue)"/>
+<path class="dep" d="M360 180 V130 H850 V300 H875" marker-end="url(#openPurple)"/>
+<path class="gold" d="M455 625 H425 V595 H395" marker-end="url(#openGold)"/>
+<defs>
+  <marker id="openPurple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#8055a6" stroke-width="1.5"/></marker>
+  <marker id="openGold" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#b58b19" stroke-width="1.5"/></marker>
+  <marker id="openBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#5279a7" stroke-width="1.5"/></marker>
+  <marker id="triangleBlue" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#ffffff" stroke="#5279a7" stroke-width="1.5"/></marker>
+</defs>
+<rect x="398" y="245" width="48" height="22" fill="#ffffff"/><text x="422" y="260" text-anchor="middle" class="dep-label">usa</text>
+<rect x="640" y="367" width="90" height="22" fill="#ffffff"/><text x="685" y="382" text-anchor="middle" class="edge-label">implementa</text>
+<rect x="816" y="462" width="100" height="22" fill="#ffffff"/><text x="866" y="477" text-anchor="middle" class="edge-label">ejecuta SQL</text>
+<rect x="605" y="117" width="155" height="22" fill="#ffffff"/><text x="682" y="132" text-anchor="middle" class="dep-label">controla transacción</text>
+<rect x="395" y="598" width="70" height="22" fill="#ffffff"/><text x="430" y="613" text-anchor="middle" class="gold-label">devuelve</text>
+
+<g id="data_service">
+  <rect x="45" y="180" width="350" height="190" fill="#ffffff" stroke="#8055a6" stroke-width="2"/>
+  <rect x="45" y="180" width="350" height="58" fill="#f2e8ff"/>
+  <line x1="45" y1="238" x2="395" y2="238" stroke="#8055a6"/>
+  <text x="57" y="202" class="stereo">servicio de aplicación</text><text x="57" y="226" font-size="17" font-weight="bold">DataService</text>
+  <text x="57" y="262" class="small">+ register_fund(isin, name, currency): Fund</text>
+  <text x="57" y="291" class="small">Valida las entradas y coordina el alta.</text>
+  <text x="57" y="316" class="small">Decide el commit o rollback de la operación.</text>
+</g>
+<g id="repository">
+  <rect x="455" y="180" width="330" height="145" fill="#ffffff" stroke="#4d8a5c" stroke-width="2"/>
+  <rect x="455" y="180" width="330" height="58" fill="#e6f4ea"/>
+  <line x1="455" y1="238" x2="785" y2="238" stroke="#4d8a5c"/>
+  <text x="467" y="202" class="stereo">clase abstracta · contrato común</text><text x="467" y="226" font-size="17" font-weight="bold">Repository</text>
+  <text x="467" y="264" class="small">+ __init__(postgres: Postgres)</text>
+  <text x="467" y="290" class="small">Comparte la dependencia de persistencia.</text>
+</g>
+<g id="funds_repository">
+  <rect x="455" y="455" width="350" height="210" fill="#ffffff" stroke="#5279a7" stroke-width="2"/>
+  <rect x="455" y="455" width="350" height="58" fill="#e8f1fb"/>
+  <line x1="455" y1="513" x2="805" y2="513" stroke="#5279a7"/>
+  <text x="467" y="477" class="stereo">repositorio concreto</text><text x="467" y="501" font-size="17" font-weight="bold">FundsRepository</text>
+  <text x="467" y="538" class="small">+ create(isin, name, currency): Fund</text>
+  <text x="467" y="566" class="small">Conoce la tabla funds y sus columnas.</text>
+  <text x="467" y="591" class="small">Construye la consulta y mapea la fila a Fund.</text>
+  <text x="467" y="616" class="small">No confirma ni llama a otros repositorios.</text>
+</g>
+<g id="postgres">
+  <rect x="875" y="300" width="350" height="260" fill="#ffffff" stroke="#5279a7" stroke-width="2"/>
+  <rect x="875" y="300" width="350" height="58" fill="#e8f1fb"/>
+  <line x1="875" y1="358" x2="1225" y2="358" stroke="#5279a7"/>
+  <text x="887" y="322" class="stereo">conexión y ejecución PostgreSQL</text><text x="887" y="346" font-size="17" font-weight="bold">Postgres</text>
+  <text x="887" y="384" class="small">+ execute(query, parameters): row</text>
+  <text x="887" y="410" class="small">+ commit()</text>
+  <text x="887" y="436" class="small">+ rollback()</text>
+  <text x="887" y="474" class="small">Mantiene la conexión compartida durante</text>
+  <text x="887" y="496" class="small">la operación transaccional.</text>
+</g>
+<g id="fund">
+  <rect x="45" y="505" width="350" height="180" fill="#ffffff" stroke="#b58b19" stroke-width="2"/>
+  <rect x="45" y="505" width="350" height="58" fill="#fff3cd"/>
+  <line x1="45" y1="563" x2="395" y2="563" stroke="#b58b19"/>
+  <text x="57" y="527" class="stereo">modelo de datos</text><text x="57" y="551" font-size="17" font-weight="bold">Fund</text>
+  <text x="57" y="587" class="small">id: int</text><text x="57" y="610" class="small">isin: str</text>
+  <text x="57" y="633" class="small">name: str</text><text x="57" y="656" class="small">currency: str · active: bool</text>
+</g>
+<rect x="45" y="735" width="1180" height="90" rx="7" fill="#f5f7f8" stroke="#b0bec5"/>
+<text x="59" y="765" font-size="14"><tspan font-weight="bold">Transacción:</tspan><tspan> una conexión compartida por la operación; DataService solicita commit si todo termina correctamente</tspan></text>
+<text x="59" y="788" font-size="14">o rollback ante un error. <tspan font-weight="bold">Integridad:</tspan> PostgreSQL aplica las claves foráneas; los repositorios no se llaman entre sí.</text>
+</svg>

@@ -1,23 +1,30 @@
 """Carga parámetros YAML y variables de entorno sin registrar sus valores.
 
-Las variables de entorno tienen prioridad sobre el YAML y el valor por defecto.
-El YAML se lee al construir Configuration; el entorno se consulta en cada get().
-No carga archivos .env ni modifica las variables del proceso.
+La prioridad es: variables de entorno > perfil activo > perfil default.
+APP_ENV selecciona development o production; si falta, se usa development.
 """
 
 import os
+from enum import Enum
 from pathlib import Path
 from typing import Any, Callable
 
 import yaml
 
 
+class Environment(str, Enum):
+    """Entornos de ejecución admitidos por la aplicación."""
+
+    DEVELOPMENT = "development"
+    PRODUCTION = "production"
+
+
 class ConfigurationError(ValueError):
-    """Indica un YAML inválido, un parámetro obligatorio ausente o un tipo inválido."""
+    """Indica un YAML inválido, un perfil inválido o un parámetro incorrecto."""
 
 
 class Configuration:
-    """Proporciona acceso a parámetros anidados y variables de entorno.
+    """Proporciona acceso a parámetros anidados de YAML y del entorno.
 
     Args:
         path: Ruta del YAML. Si se omite, usa APP_CONFIG_FILE o el config.yaml
@@ -26,10 +33,12 @@ class Configuration:
 
     Raises:
         OSError: Si no puede leerse el archivo solicitado.
-        ConfigurationError: Si el YAML no es válido o su raíz no es un mapa.
+        ConfigurationError: Si la raíz del YAML no es un mapa o APP_ENV no es
+            uno de los entornos admitidos.
     """
 
     def __init__(self, path: str | Path | None = None) -> None:
+        """Lee el YAML y combina default con el entorno indicado por APP_ENV."""
         selected_path = path if path is not None else os.environ.get(
             "APP_CONFIG_FILE", Path(__file__).with_name("config.yaml")
         )
@@ -38,18 +47,46 @@ class Configuration:
             with self._source_path.open(encoding="utf-8") as stream:
                 data = yaml.safe_load(stream)
         except yaml.YAMLError:
-            # No exponer fragmentos del YAML
+            # No exponer fragmentos del YAML.
             raise ConfigurationError("El fichero de configuración no es YAML válido.") from None
         if data is None:
             data = {}
         if not isinstance(data, dict):
             raise ConfigurationError("La raíz del YAML debe ser un mapa de parámetros.")
-        self._data = data
+
+        environment_value = os.environ.get("APP_ENV", Environment.DEVELOPMENT.value)
+        try:
+            self._environment = Environment(environment_value)
+        except ValueError:
+            raise ConfigurationError(
+                "APP_ENV debe ser development o production."
+            ) from None
+
+        self._data = self._merge(
+            data.get("default", {}),
+            data.get(self._environment.value, {}),
+        )
+
+    @classmethod
+    def _merge(cls, base: dict[str, Any], overrides: dict[str, Any]) -> dict[str, Any]:
+        """Devuelve una combinación recursiva sin modificar los mapas originales."""
+        result = dict(base)
+        for key, value in overrides.items():
+            if isinstance(result.get(key), dict) and isinstance(value, dict):
+                result[key] = cls._merge(result[key], value)
+            else:
+                result[key] = value
+        return result
 
     @property
     def source_path(self) -> Path:
         """Devuelve la ruta absoluta del fichero YAML cargado."""
         return self._source_path
+
+    @property
+    def environment(self) -> Environment:
+        """Devuelve el entorno enumerado seleccionado mediante APP_ENV."""
+        return self._environment
 
     def get(
         self,
@@ -60,7 +97,7 @@ class Configuration:
         cast: Callable[[Any], Any] | None = None,
         required: bool = False,
     ) -> Any:
-        """Obtiene un parámetro aplicando entorno > YAML > default.
+        """Obtiene un parámetro aplicando entorno > perfil > default.
 
         Args:
             key: Ruta separada por puntos, por ejemplo database.schema.
